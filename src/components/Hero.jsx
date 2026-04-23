@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Star, Calendar, ShieldCheck, Sparkles, ArrowRight } from 'lucide-react';
+import { useT } from '../i18n/LanguageContext.jsx';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -11,11 +12,13 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const { t, lang } = useT();
   return (
     <section id="top" className="relative overflow-hidden">
       <div className="container-px mx-auto grid max-w-7xl items-center gap-12 py-20 md:grid-cols-2 md:py-28 lg:py-32">
         <div className="relative z-10">
           <motion.span
+            key={`eyebrow-${lang}`}
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -23,30 +26,30 @@ export default function Hero() {
             className="section-eyebrow"
           >
             <Sparkles className="h-3.5 w-3.5" />
-            Chișinău · Est. care & implants
+            {t.hero.eyebrow}
           </motion.span>
 
           <motion.h1
+            key={`title-${lang}`}
             variants={fadeUp}
             initial="hidden"
             animate="show"
             custom={1}
             className="h-display mt-6 text-4xl leading-[1.08] sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            A brighter smile, <br />
-            <span className="gradient-text">crafted with care.</span>
+            {t.hero.titleA} <br />
+            <span className="gradient-text">{t.hero.titleB}</span>
           </motion.h1>
 
           <motion.p
+            key={`sub-${lang}`}
             variants={fadeUp}
             initial="hidden"
             animate="show"
             custom={2}
             className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600"
           >
-            At ScutDent we combine advanced implantology, aesthetic dentistry,
-            and warm, personal care — so every visit feels effortless and every
-            smile feels like yours again.
+            {t.hero.subtitle}
           </motion.p>
 
           <motion.div
@@ -57,11 +60,11 @@ export default function Hero() {
             className="mt-8 flex flex-wrap items-center gap-3"
           >
             <a href="#book" className="btn-primary group">
-              Book a Visit
+              {t.hero.ctaBook}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a href="#services" className="btn-ghost">
-              Explore Treatments
+              {t.hero.ctaServices}
             </a>
           </motion.div>
 
@@ -89,12 +92,12 @@ export default function Hero() {
                   ))}
                   <span className="ml-1.5 text-sm font-semibold text-slate-800">5.0</span>
                 </div>
-                <p className="text-xs text-slate-500">193+ verified Google reviews</p>
+                <p className="text-xs text-slate-500">193+ {t.hero.rating}</p>
               </div>
             </div>
             <div className="hidden items-center gap-2 text-sm text-slate-600 sm:flex">
               <ShieldCheck className="h-5 w-5 text-mint-500" />
-              Licensed specialists & modern equipment
+              {t.hero.license}
             </div>
           </motion.div>
         </div>
@@ -106,6 +109,7 @@ export default function Hero() {
 }
 
 function HeroVisual() {
+  const { t } = useT();
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.92 }}
@@ -116,9 +120,7 @@ function HeroVisual() {
       <div className="absolute inset-0 -z-10 animate-blob bg-gradient-to-br from-brand-200 via-brand-100 to-mint-400/60" />
       <div className="absolute -inset-6 -z-10 animate-blob bg-gradient-to-tr from-mint-400/30 via-white to-brand-300/50 blur-2xl" />
 
-      <motion.div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-float"
-      >
+      <motion.div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-float">
         <div className="relative grid h-56 w-56 place-items-center rounded-full bg-white shadow-2xl shadow-brand-500/20 sm:h-72 sm:w-72">
           <svg viewBox="0 0 64 64" className="h-28 w-28 sm:h-36 sm:w-36" fill="none">
             <defs>
@@ -148,21 +150,21 @@ function HeroVisual() {
         className="absolute -left-3 top-6 sm:-left-8"
         delay={0.4}
         icon={<Calendar className="h-5 w-5 text-brand-600" />}
-        title="Next available"
-        value="Today · 15:30"
+        title={t.hero.nextAvailable}
+        value={t.hero.nextTime}
       />
       <FloatingCard
         className="absolute -right-2 top-24 sm:-right-6"
         delay={0.6}
         icon={<Sparkles className="h-5 w-5 text-mint-500" />}
-        title="Implant success"
+        title={t.hero.implantSuccess}
         value="98.6%"
       />
       <FloatingCard
         className="absolute bottom-4 left-4 sm:bottom-8 sm:left-0"
         delay={0.8}
         icon={<Star className="h-5 w-5 fill-amber-400 text-amber-400" />}
-        title="Google rating"
+        title={t.hero.googleRating}
         value="5.0 / 5 · 193"
       />
     </motion.div>

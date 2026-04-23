@@ -1,14 +1,16 @@
 import { motion } from 'framer-motion';
 import { Award, HeartHandshake, ShieldCheck, Users } from 'lucide-react';
-
-const stats = [
-  { icon: Users, value: '12,000+', label: 'Happy patients' },
-  { icon: Award, value: '15+', label: 'Years of practice' },
-  { icon: ShieldCheck, value: '98.6%', label: 'Implant success' },
-  { icon: HeartHandshake, value: '5.0', label: 'Google rating' },
-];
+import { useT } from '../i18n/LanguageContext.jsx';
 
 export default function TrustBar() {
+  const { t } = useT();
+  const stats = [
+    { icon: Users, value: '12,000+', label: t.stats.patients },
+    { icon: Award, value: '15+', label: t.stats.years },
+    { icon: ShieldCheck, value: '98.6%', label: t.stats.success },
+    { icon: HeartHandshake, value: '5.0', label: t.stats.rating },
+  ];
+
   return (
     <section className="container-px mx-auto max-w-7xl -mt-4 pb-8">
       <motion.div

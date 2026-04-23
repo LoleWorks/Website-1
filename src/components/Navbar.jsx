@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone } from 'lucide-react';
-
-const links = [
-  { label: 'Services', href: '#services' },
-  { label: 'About', href: '#about' },
-  { label: 'Reviews', href: '#reviews' },
-  { label: 'Contact', href: '#book' },
-];
+import { useT } from '../i18n/LanguageContext.jsx';
+import LanguageSwitcher from './LanguageSwitcher.jsx';
 
 export default function Navbar() {
+  const { t } = useT();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const links = [
+    { label: t.nav.services, href: '#services' },
+    { label: t.nav.about, href: '#about' },
+    { label: t.nav.reviews, href: '#reviews' },
+    { label: t.nav.contact, href: '#book' },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -58,6 +61,7 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher />
           <a
             href="tel:+37362019019"
             className="hidden items-center gap-2 text-sm font-semibold text-slate-700 hover:text-brand-700 lg:flex"
@@ -66,17 +70,20 @@ export default function Navbar() {
             +373 620 19 019
           </a>
           <a href="#book" className="btn-primary !py-2.5 !px-5 text-xs">
-            Book a Visit
+            {t.nav.book}
           </a>
         </div>
 
-        <button
-          className="grid h-11 w-11 place-items-center rounded-xl border border-slate-200 bg-white md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher compact />
+          <button
+            className="grid h-11 w-11 place-items-center rounded-xl border border-slate-200 bg-white"
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>
@@ -100,7 +107,7 @@ export default function Navbar() {
                   </a>
                 ))}
                 <a href="#book" onClick={() => setOpen(false)} className="btn-primary mt-2">
-                  Book a Visit
+                  {t.nav.book}
                 </a>
               </div>
             </div>

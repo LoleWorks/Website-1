@@ -1,18 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Phone, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
-
-const services = [
-  'General consultation',
-  'Dental implant',
-  'Teeth whitening',
-  'Veneers / smile design',
-  'Orthodontics',
-  'Pediatric care',
-  'Other',
-];
+import { Phone, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
+import { useT } from '../i18n/LanguageContext.jsx';
 
 export default function Booking() {
+  const { t, lang } = useT();
+  const services = t.booking.services;
+
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({
     name: '',
@@ -22,11 +16,14 @@ export default function Booking() {
     notes: '',
   });
 
+  useEffect(() => {
+    setForm((f) => ({ ...f, service: services[0] }));
+  }, [lang]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     setSent(true);
   };
-
   const onChange = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   return (
@@ -50,27 +47,24 @@ export default function Booking() {
               className="lg:col-span-2"
             >
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] backdrop-blur">
-                Book an appointment
+                {t.booking.eyebrow}
               </span>
               <h2 className="h-display mt-5 text-3xl text-white sm:text-4xl md:text-5xl">
-                Let's bring back your <span className="text-mint-400">best smile.</span>
+                {t.booking.titleA} <span className="text-mint-400">{t.booking.titleB}</span>
               </h2>
-              <p className="mt-4 max-w-md text-white/80">
-                Leave your details — one of our coordinators will confirm your visit within
-                a few hours. Same-day appointments often available.
-              </p>
+              <p className="mt-4 max-w-md text-white/80">{t.booking.subtitle}</p>
 
               <div className="mt-10 space-y-4 text-sm">
-                <InfoRow icon={MapPin} title="Visit us">
+                <InfoRow icon={MapPin} title={t.booking.visit}>
                   Strada Sfatul Țării 61A, Chișinău, MD-2004, Moldova
                 </InfoRow>
-                <InfoRow icon={Phone} title="Call us">
+                <InfoRow icon={Phone} title={t.booking.call}>
                   <a className="hover:underline" href="tel:+37362019019">
                     +373 620 19 019
                   </a>
                 </InfoRow>
-                <InfoRow icon={Clock} title="Open hours">
-                  Mon – Sat · 09:00 – 18:00
+                <InfoRow icon={Clock} title={t.booking.hours}>
+                  {t.booking.hoursValue}
                 </InfoRow>
               </div>
             </motion.div>
@@ -92,11 +86,9 @@ export default function Booking() {
                     <div className="grid h-16 w-16 place-items-center rounded-full bg-mint-500/10 text-mint-500">
                       <CheckCircle2 className="h-8 w-8" />
                     </div>
-                    <h3 className="h-display text-2xl">You're booked in!</h3>
+                    <h3 className="h-display text-2xl">{t.booking.successTitle}</h3>
                     <p className="max-w-sm text-slate-600">
-                      Thank you, {form.name || 'friend'}. A coordinator will reach out at{' '}
-                      <span className="font-semibold">{form.phone || 'your number'}</span> to
-                      confirm your appointment.
+                      {t.booking.successBody(form.name, form.phone)}
                     </p>
                     <button
                       onClick={() => {
@@ -111,32 +103,32 @@ export default function Booking() {
                       }}
                       className="btn-ghost mt-2"
                     >
-                      Book another visit
+                      {t.booking.another}
                     </button>
                   </motion.div>
                 ) : (
                   <form className="space-y-4" onSubmit={onSubmit}>
                     <div className="grid gap-4 sm:grid-cols-2">
                       <Field
-                        label="Your name"
+                        label={t.booking.nameLabel}
                         value={form.name}
                         onChange={onChange('name')}
                         required
-                        placeholder="Alex Popescu"
+                        placeholder={t.booking.namePh}
                       />
                       <Field
-                        label="Phone"
+                        label={t.booking.phoneLabel}
                         value={form.phone}
                         onChange={onChange('phone')}
                         required
                         type="tel"
-                        placeholder="+373 ..."
+                        placeholder={t.booking.phonePh}
                       />
                     </div>
 
                     <div>
                       <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                        Service
+                        {t.booking.serviceLabel}
                       </label>
                       <select
                         value={form.service}
@@ -150,7 +142,7 @@ export default function Booking() {
                     </div>
 
                     <Field
-                      label="Preferred date"
+                      label={t.booking.dateLabel}
                       value={form.date}
                       onChange={onChange('date')}
                       type="date"
@@ -158,24 +150,22 @@ export default function Booking() {
 
                     <div>
                       <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                        Notes (optional)
+                        {t.booking.notesLabel}
                       </label>
                       <textarea
                         value={form.notes}
                         onChange={onChange('notes')}
                         rows={3}
-                        placeholder="Tell us a bit about what you'd like to address..."
+                        placeholder={t.booking.notesPh}
                         className="w-full resize-none rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-800 outline-none transition focus:border-brand-400 focus:ring-4 focus:ring-brand-100"
                       />
                     </div>
 
                     <button type="submit" className="btn-primary w-full group">
                       <Send className="h-4 w-4 transition group-hover:translate-x-0.5" />
-                      Request Appointment
+                      {t.booking.submit}
                     </button>
-                    <p className="text-center text-xs text-slate-500">
-                      By booking you agree to be contacted about your appointment.
-                    </p>
+                    <p className="text-center text-xs text-slate-500">{t.booking.consent}</p>
                   </form>
                 )}
               </div>

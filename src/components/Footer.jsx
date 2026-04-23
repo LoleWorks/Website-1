@@ -1,6 +1,9 @@
 import { MapPin, Phone, Globe, Instagram, Facebook } from 'lucide-react';
+import { useT } from '../i18n/LanguageContext.jsx';
 
 export default function Footer() {
+  const { t } = useT();
+
   return (
     <footer className="border-t border-slate-100 bg-white">
       <div className="container-px mx-auto max-w-7xl py-14">
@@ -17,8 +20,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-600">
-              A modern dental clinic in Chișinău combining advanced technology with
-              heartfelt patient care. Restoring confident smiles for over 15 years.
+              {t.footer.about}
             </p>
             <div className="mt-5 flex items-center gap-3">
               <SocialBtn label="Instagram"><Instagram className="h-4 w-4" /></SocialBtn>
@@ -31,19 +33,19 @@ export default function Footer() {
 
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-              Clinic
+              {t.footer.clinic}
             </h4>
             <ul className="mt-4 space-y-2 text-sm text-slate-600">
-              <li><a href="#services" className="hover:text-brand-700">Services</a></li>
-              <li><a href="#about" className="hover:text-brand-700">About us</a></li>
-              <li><a href="#reviews" className="hover:text-brand-700">Patient reviews</a></li>
-              <li><a href="#book" className="hover:text-brand-700">Book a visit</a></li>
+              <li><a href="#services" className="hover:text-brand-700">{t.footer.links.services}</a></li>
+              <li><a href="#about" className="hover:text-brand-700">{t.footer.links.about}</a></li>
+              <li><a href="#reviews" className="hover:text-brand-700">{t.footer.links.reviews}</a></li>
+              <li><a href="#book" className="hover:text-brand-700">{t.footer.links.book}</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-              Contact
+              {t.footer.contact}
             </h4>
             <ul className="mt-4 space-y-3 text-sm text-slate-600">
               <li className="flex items-start gap-2">
@@ -63,8 +65,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-slate-100 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} ScutDent. All rights reserved.</p>
-          <p>Made with care in Chișinău · LGBTQ+ friendly clinic</p>
+          <p>© {new Date().getFullYear()} ScutDent. {t.footer.rights}</p>
+          <p>{t.footer.made}</p>
         </div>
       </div>
     </footer>
